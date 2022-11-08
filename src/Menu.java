@@ -1,4 +1,5 @@
 import institucion.*;
+import personas.Administrativo;
 import personas.Doctor;
 import personas.Paciente;
 
@@ -44,25 +45,16 @@ public class Menu {
 
                                 switch (prestacionDeseada) {
                                     case 1:
+                                        //Recupero al unico administrativo -- MVP obtengo arbitrariamente el de posicion 0
+                                        //Siempre la clinica tendra a lmenos 1 administrativo
                                         System.out.println("Elija especialidad: ");
                                         for (int i = 0; i < clinica.getEspecialidades().size(); i++) {
                                             System.out.println(i + " - " + clinica.getEspecialidades().get(i).getNombre());
                                         }
 
                                         int esp = sn.nextInt();
-
                                         Especialidad especial = clinica.getEspecialidades().get(esp);
-
-                                        System.out.println("Ingrese nombre del estudio");
-                                        String estudioNombre = sn.next().toUpperCase();
-
-                                        Estudio estudio = new Estudio();
-                                        estudio.setNombre(estudioNombre);
-                                        Doctor doc = clinica.getDoctores().stream().filter(d -> d.getEspecialidad().getNombre().equals(especial.getNombre())).findFirst().get();
-                                        estudio.setDoctor(doc);
-                                        estudio.setEspecialidad(especial);
-                                        estudio.setActiva(true);
-                                        clinica.getPrestaciones().add(estudio);
+                                        clinica.getEmpleadosAdministrativos().get(0).agregarPrestacion(especial, sn, true);
                                         break;
                                     case 2:
                                         System.out.println("Elija especialidad: ");
@@ -71,19 +63,9 @@ public class Menu {
                                         }
 
                                         int esp2 = sn.nextInt();
-
                                         Especialidad especial2 = clinica.getEspecialidades().get(esp2);
+                                        clinica.getEmpleadosAdministrativos().get(0).agregarPrestacion(especial2, sn, false);
 
-                                        System.out.println("Ingrese nombre de la practica");
-                                        String ptnombre = sn.nextLine().toUpperCase();
-
-                                        PracticaTradicional pt = new PracticaTradicional();
-                                        pt.setNombre(ptnombre);
-                                        Doctor docPractica = clinica.getDoctores().stream().filter(d -> d.getEspecialidad().getNombre().equals(especial2.getNombre())).findFirst().get();
-                                        pt.setDoctor(docPractica);
-                                        pt.setEspecialidad(especial2);
-                                        pt.setActiva(true);
-                                        clinica.getPrestaciones().add(pt);
                                         break;
                                     default:
                                         System.out.println("Opcion invalida -> Ingrese una opcion por favor");
@@ -92,20 +74,11 @@ public class Menu {
                                 mostrarMenu(clinica);
                                 break;
                             case 2:
-                                for (int i = 0; i < clinica.getPrestaciones().size(); i++) {
-                                    if (clinica.getPrestaciones().get(i).isActiva()) {
-                                        System.out.println(clinica.getPrestaciones().get(i).getNombre());
-                                    }
-                                }
+                                clinica.getEmpleadosAdministrativos().get(0).obtenerPrestacionesActivasDeLaClinica();
                                 mostrarMenu(clinica);
                                 break;
-
                             case 3:
-                                for (int i = 0; i < clinica.getTurnos().size(); i++) {
-                                    if (clinica.getTurnos().get(i).isDisponible()) {
-                                        System.out.println("->" + i + "- ID:" + clinica.getTurnos().get(i).getId() + "    ----------------    " + clinica.getTurnos().get(i).getFechaInicio() + " - " + clinica.getTurnos().get(i).getFechaFin());
-                                    }
-                                }
+                                clinica.getEmpleadosAdministrativos().get(0).verTurnosDisponibles();
                                 mostrarMenu(clinica);
                                 break;
                             case 4:
@@ -113,34 +86,12 @@ public class Menu {
                                 System.out.println("Ingrese su DNI, sin PUNTOS POR FAVOR:");
                                 //ESTO NO CONTEMPLA CASOS COMO DNI REPETIDOS
                                 int dniIngresado = sn.nextInt();
-
-                                Paciente pacienteEncontrado= null;
-
-                                 for (Paciente p : clinica.getPacientes()){
-                                     if(p.getDni()==dniIngresado){
-                                         pacienteEncontrado = p;
-                                     }
-                                 }
-                                if (pacienteEncontrado == null) {
-                                    System.out.println("El paciente no se encuentra en la base de datos.");
-                                    mostrarMenu(clinica);
-                                    break;
-                                }
-
-                                if (pacienteEncontrado.getTurnosAsociados()==null || pacienteEncontrado.getTurnosAsociados().size() < 1) {
-                                    System.out.println("El paciente no registra turnos.");
-                                    mostrarMenu(clinica);
-                                    break;
-                                }
-
-                                System.out.println("TURNOS ENCONTRADOS:");
-                                for (Turno t : pacienteEncontrado.getTurnosAsociados()) {
-                                    System.out.println(t.getId() + " - " + t.getPrestacion().getNombre());
-                                }
+                                clinica.getEmpleadosAdministrativos().get(0).verTurnosTomadosPorDNI(dniIngresado);
+                                //ESTE MVP sufre un bug con numeros mayores al rango de int. Ideal seria utilizar string quizas..
                                 mostrarMenu(clinica);
                                 break;
                             case 5:
-                                //TODO opcion ppal
+                                //DAR TURNO
                             case 0:
                                 mostrarMenu(clinica);
                             default:

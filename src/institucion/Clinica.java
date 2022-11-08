@@ -23,13 +23,14 @@ public class Clinica {
 
     public Clinica() {
 
-        this.setEmpleadosAdministrativos(new ArrayList<>());
-        this.getEmpleadosAdministrativos().add(new Administrativo(12987123, "Ricky", "Maravilla"));
+        setEmpleadosAdministrativos(new ArrayList<Administrativo>());
+
 
         Director direc = new Director();
         direc.setNombre("Ricardo");
         direc.setApellido("Fort");
         direc.setDni(37123957);
+
 
         /**
          *  Especialidades
@@ -211,6 +212,9 @@ public class Clinica {
         this.turnos.add(st1);
         this.turnos.add(st2);
 
+        setDirector(director);
+        Administrativo ricky = new Administrativo(123, "Ricky", "Maravilla");
+        this.empleadosAdministrativos.add(ricky);
     }
 
     public static Clinica getInstance() {

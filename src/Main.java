@@ -4,12 +4,17 @@ public class Main {
 
     public static void main(String[] args) {
 
+        try {
+
+
         Clinica clinica = Clinica.getInstance();
 
         System.out.println(">>>> Bienvenido a la Clinica de PUEBLO <<<");
 
         Menu.mostrarMenu(clinica);
-
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }
