@@ -1,6 +1,8 @@
 import institucion.*;
 import personas.Doctor;
+import personas.Paciente;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Menu {
@@ -32,7 +34,7 @@ public class Menu {
 
                         int opcionElegida = sn.nextInt();
 
-                        switch (opcionElegida){
+                        switch (opcionElegida) {
                             case 1:
                                 System.out.println("Seleccione:");
                                 System.out.println("1. Prestacion - estudio");
@@ -40,11 +42,11 @@ public class Menu {
 
                                 int prestacionDeseada = sn.nextInt();
 
-                                switch (prestacionDeseada){
+                                switch (prestacionDeseada) {
                                     case 1:
                                         System.out.println("Elija especialidad: ");
-                                        for(int i=0; i<clinica.getEspecialidades().size(); i++){
-                                            System.out.println(i +" - " + clinica.getEspecialidades().get(i).getNombre());
+                                        for (int i = 0; i < clinica.getEspecialidades().size(); i++) {
+                                            System.out.println(i + " - " + clinica.getEspecialidades().get(i).getNombre());
                                         }
 
                                         int esp = sn.nextInt();
@@ -56,7 +58,7 @@ public class Menu {
 
                                         Estudio estudio = new Estudio();
                                         estudio.setNombre(estudioNombre);
-                                        Doctor doc = clinica.getDoctores().stream().filter(d->d.getEspecialidad().getNombre().equals(especial.getNombre())).findFirst().get();
+                                        Doctor doc = clinica.getDoctores().stream().filter(d -> d.getEspecialidad().getNombre().equals(especial.getNombre())).findFirst().get();
                                         estudio.setDoctor(doc);
                                         estudio.setEspecialidad(especial);
                                         estudio.setActiva(true);
@@ -64,8 +66,8 @@ public class Menu {
                                         break;
                                     case 2:
                                         System.out.println("Elija especialidad: ");
-                                        for(int i=0; i<clinica.getEspecialidades().size(); i++){
-                                            System.out.println(i +" - " + clinica.getEspecialidades().get(i).getNombre());
+                                        for (int i = 0; i < clinica.getEspecialidades().size(); i++) {
+                                            System.out.println(i + " - " + clinica.getEspecialidades().get(i).getNombre());
                                         }
 
                                         int esp2 = sn.nextInt();
@@ -77,7 +79,7 @@ public class Menu {
 
                                         PracticaTradicional pt = new PracticaTradicional();
                                         pt.setNombre(ptnombre);
-                                        Doctor docPractica = clinica.getDoctores().stream().filter(d->d.getEspecialidad().getNombre().equals(especial2.getNombre())).findFirst().get();
+                                        Doctor docPractica = clinica.getDoctores().stream().filter(d -> d.getEspecialidad().getNombre().equals(especial2.getNombre())).findFirst().get();
                                         pt.setDoctor(docPractica);
                                         pt.setEspecialidad(especial2);
                                         pt.setActiva(true);
@@ -90,8 +92,8 @@ public class Menu {
                                 mostrarMenu(clinica);
                                 break;
                             case 2:
-                                for(int i=0; i<clinica.getPrestaciones().size(); i++){
-                                    if(clinica.getPrestaciones().get(i).isActiva()){
+                                for (int i = 0; i < clinica.getPrestaciones().size(); i++) {
+                                    if (clinica.getPrestaciones().get(i).isActiva()) {
                                         System.out.println(clinica.getPrestaciones().get(i).getNombre());
                                     }
                                 }
@@ -99,18 +101,47 @@ public class Menu {
                                 break;
 
                             case 3:
-                                for(int i=0; i<clinica.getTurnos().size(); i++){
-                                    if(clinica.getTurnos().get(i).isDisponible()){
-                                        System.out.println( "->" +i + "- ID:" + clinica.getTurnos().get(i).getId() + "    ----------------    " + clinica.getTurnos().get(i).getFechaInicio() + " - " + clinica.getTurnos().get(i).getFechaFin());
+                                for (int i = 0; i < clinica.getTurnos().size(); i++) {
+                                    if (clinica.getTurnos().get(i).isDisponible()) {
+                                        System.out.println("->" + i + "- ID:" + clinica.getTurnos().get(i).getId() + "    ----------------    " + clinica.getTurnos().get(i).getFechaInicio() + " - " + clinica.getTurnos().get(i).getFechaFin());
                                     }
                                 }
                                 mostrarMenu(clinica);
                                 break;
                             case 4:
+                                //TODO opcion ppal
+                                System.out.println("Ingrese su DNI, sin PUNTOS POR FAVOR:");
+                                //ESTO NO CONTEMPLA CASOS COMO DNI REPETIDOS
+                                int dniIngresado = sn.nextInt();
 
+                                Paciente pacienteEncontrado= null;
+
+                                 for (Paciente p : clinica.getPacientes()){
+                                     if(p.getDni()==dniIngresado){
+                                         pacienteEncontrado = p;
+                                     }
+                                 }
+                                if (pacienteEncontrado == null) {
+                                    System.out.println("El paciente no se encuentra en la base de datos.");
+                                    mostrarMenu(clinica);
+                                    break;
+                                }
+
+                                if (pacienteEncontrado.getTurnosAsociados()==null || pacienteEncontrado.getTurnosAsociados().size() < 1) {
+                                    System.out.println("El paciente no registra turnos.");
+                                    mostrarMenu(clinica);
+                                    break;
+                                }
+
+                                System.out.println("TURNOS ENCONTRADOS:");
+                                for (Turno t : pacienteEncontrado.getTurnosAsociados()) {
+                                    System.out.println(t.getId() + " - " + t.getPrestacion().getNombre());
+                                }
+                                mostrarMenu(clinica);
+                                break;
                             case 5:
-
-                            case 6:
+                                //TODO opcion ppal
+                            case 0:
                                 mostrarMenu(clinica);
                             default:
                                 System.out.println("Opcion invalida -> Ingrese una opcion por favor");

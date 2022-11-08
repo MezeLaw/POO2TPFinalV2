@@ -104,7 +104,25 @@ public class Clinica {
         doctores.add(mengetche);
         doctores.add(bilardo);
 
+        Paciente meze = new Paciente();
+        meze.setId(UUID.randomUUID().toString());
+        meze.setDni(37869099);
+        meze.setNombre("Martin");
+        meze.setApellido("Abogado");
+        meze.setCobertura("SWISS MEDICAL 99999");
+
+        Turno turnoMock = new Turno();
+        turnoMock.setId(UUID.randomUUID().toString());
+        turnoMock.setPrestacion(terapia);
+        turnoMock.setFechaInicio(LocalDateTime.now());
+
+        ArrayList<Turno> turnosDeMeze = new ArrayList<>();
+        turnosDeMeze.add(turnoMock);
+
+        meze.setTurnosAsociados(turnosDeMeze);
+
         this.pacientes = new ArrayList<>();
+        this.pacientes.add(meze);
 
         this.prestaciones = new ArrayList<>();
         this.prestaciones.add(consulta);
