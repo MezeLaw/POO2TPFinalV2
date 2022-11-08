@@ -3,7 +3,6 @@ package institucion;
 import personas.Paciente;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 public class Turno {
 

@@ -5,8 +5,6 @@ import personas.Director;
 import personas.Doctor;
 import personas.Paciente;
 
-import javax.print.Doc;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.UUID;
