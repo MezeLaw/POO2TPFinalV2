@@ -2,30 +2,27 @@ package personas;
 
 import institucion.*;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Administrativo extends Persona{
-
+public class Administrativo extends Persona {
 
 
     public Administrativo(int dni, String nombre, String apellido) {
         super(dni, nombre, apellido);
     }
 
-    public Administrativo(){
+    public Administrativo() {
         super(0, null, null);
     }
 
 
 //TODO definir e implementar funcionalidad
 
-    public void agregarPrestacion(Especialidad especialidad, Scanner sn, boolean esEstudio){
+    public void agregarPrestacion(Especialidad especialidad, Scanner sn, boolean esEstudio) {
         //Esto agrega la prestacion creada a la clinica->prestaciones
         //clinica.getPrestaciones().add(prestacion);
         Clinica clinica = Clinica.getInstance();
-        if (esEstudio){
+        if (esEstudio) {
             System.out.println("Ingrese nombre del estudio");
             String estudioNombre = sn.next().toUpperCase();
 
@@ -51,7 +48,7 @@ public class Administrativo extends Persona{
         }
     }
 
-    public void obtenerPrestacionesActivasDeLaClinica(){
+    public void obtenerPrestacionesActivasDeLaClinica() {
         Clinica clinica = Clinica.getInstance();
         for (int i = 0; i < clinica.getPrestaciones().size(); i++) {
             if (clinica.getPrestaciones().get(i).isActiva()) {
@@ -60,25 +57,28 @@ public class Administrativo extends Persona{
         }
     }
 
-    public void verTurnosDisponibles(){
+    public void verTurnosDisponibles() {
         Clinica clinica = Clinica.getInstance();
         for (int i = 0; i < clinica.getTurnos().size(); i++) {
             if (clinica.getTurnos().get(i).isDisponible()) {
-                System.out.println("->" + i + "- ID:" + clinica.getTurnos().get(i).getId() + "    ----------------    " + clinica.getTurnos().get(i).getFechaInicio() + " - " + clinica.getTurnos().get(i).getFechaFin() +"Disponible: "+clinica.getTurnos().get(i).isDisponible() + " Es sobreturno: "+ clinica.getTurnos().get(i).isEsSobreturno());
+                System.out.println("->" + i + "- ID:" + clinica.getTurnos().get(i).getId() + "    ----------------    "
+                        + clinica.getTurnos().get(i).getFechaInicio() + " - " + clinica.getTurnos().get(i).getFechaFin()
+                        + "Disponible: " + clinica.getTurnos().get(i).isDisponible() + " Es sobreturno: "
+                        + clinica.getTurnos().get(i).isEsSobreturno());
             }
         }
     }
 
-    public void verTurnosTomadosPorDNI(int dni){
+    public void verTurnosTomadosPorDNI(int dni) {
         Clinica clinica = Clinica.getInstance();
-        Paciente pacienteEncontrado= null;
+        Paciente pacienteEncontrado = null;
 
         pacienteEncontrado = getPacientePorDNI(dni);
 
         if (pacienteEncontrado == null) {
             System.out.println("El paciente no se encuentra en la base de datos.");
 
-        } else  if (pacienteEncontrado.getTurnosAsociados()==null || pacienteEncontrado.getTurnosAsociados().size() < 1) {
+        } else if (pacienteEncontrado.getTurnosAsociados() == null || pacienteEncontrado.getTurnosAsociados().size() < 1) {
             System.out.println("El paciente no registra turnos.");
 
         } else {
@@ -90,23 +90,23 @@ public class Administrativo extends Persona{
 
     }
 
-    public void darTurno(Scanner sn){
+    public void darTurno(Scanner sn) {
         Clinica clinica = Clinica.getInstance();
         System.out.println("Ingrese el DNI del paciente: ");
         int dni = sn.nextInt();
 
         Paciente paciente = getPacientePorDNI(dni);
 
-        if(paciente ==null){
+        if (paciente == null) {
             //Este MVP no crea pacientes si no existe previamente
             System.out.println("Paciente no encontrado");
         } else {
             System.out.println("Seleccione la prestacion a realizar:");
 
-            for(int i=0; i<clinica.getPrestaciones().size(); i++){
-               if(clinica.getPrestaciones().get(i).isActiva()){
-                   System.out.println(i + " - " + clinica.getPrestaciones().get(i).getNombre());
-               }
+            for (int i = 0; i < clinica.getPrestaciones().size(); i++) {
+                if (clinica.getPrestaciones().get(i).isActiva()) {
+                    System.out.println(i + " - " + clinica.getPrestaciones().get(i).getNombre());
+                }
             }
 
             int prestacionElegida = sn.nextInt();
@@ -116,8 +116,8 @@ public class Administrativo extends Persona{
             Doctor doc = clinica.getPrestaciones().get(prestacionElegida).getDoctor();
 
             System.out.println("Seleccione un turno de los disponibles: ");
-            for(int i=0; i<clinica.getTurnos().size(); i++){
-                if(clinica.getTurnos().get(i).isDisponible()){
+            for (int i = 0; i < clinica.getTurnos().size(); i++) {
+                if (clinica.getTurnos().get(i).isDisponible()) {
                     System.out.println(i + " - " + clinica.getTurnos().get(i).getFechaInicio());
                 }
             }
@@ -133,10 +133,10 @@ public class Administrativo extends Persona{
 
     }
 
-    public Paciente getPacientePorDNI(int dni){
+    public Paciente getPacientePorDNI(int dni) {
         Clinica clinica = Clinica.getInstance();
-        for(Paciente p : clinica.getPacientes()){
-            if(p.getDni()==dni){
+        for (Paciente p : clinica.getPacientes()) {
+            if (p.getDni() == dni) {
                 return p;
             }
         }
