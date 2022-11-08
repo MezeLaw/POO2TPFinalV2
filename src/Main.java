@@ -6,12 +6,11 @@ public class Main {
 
         try {
 
-
         Clinica clinica = Clinica.getInstance();
 
         System.out.println(">>>> Bienvenido a la Clinica de PUEBLO <<<");
 
-        Menu.mostrarMenu(clinica);
+        MenuApp.mostrarMenu(clinica);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -13,7 +13,6 @@ public class Turno {
     private LocalDateTime fechaFin;
     private String ubicacion; //TODO Laboratorio o consultorio
     private Paciente paciente;
-
     private boolean esSobreturno;
 
     private boolean disponible;

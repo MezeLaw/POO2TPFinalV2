@@ -1,12 +1,9 @@
-import institucion.*;
-import personas.Administrativo;
-import personas.Doctor;
-import personas.Paciente;
+import institucion.Clinica;
+import institucion.Especialidad;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Menu {
+public class MenuApp {
 
     public static void mostrarMenu(Clinica clinica) {
         Scanner sn = new Scanner(System.in);
@@ -91,7 +88,9 @@ public class Menu {
                                 mostrarMenu(clinica);
                                 break;
                             case 5:
-                                //DAR TURNO
+                                clinica.getEmpleadosAdministrativos().get(0).darTurno(sn);
+                                mostrarMenu(clinica);
+                                break;
                             case 0:
                                 mostrarMenu(clinica);
                             default:
