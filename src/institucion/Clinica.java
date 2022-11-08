@@ -127,6 +127,10 @@ public class Clinica {
         t3.setId(UUID.randomUUID().toString());
         t4.setId(UUID.randomUUID().toString());
 
+        t1.setDisponible(true);
+        t2.setDisponible(true);
+        t3.setDisponible(true);
+        t4.setDisponible(true);
 
         t1.setEsSobreturno(false);
         t2.setEsSobreturno(false);
@@ -177,6 +181,9 @@ public class Clinica {
 
         st1.setUbicacion("CONSULTORIO");
         st2.setUbicacion("CONSULTORIO");
+
+        st1.setDisponible(true);
+        st2.setDisponible(true);
 
         this.turnos = new ArrayList<>();
         this.turnos.add(t1);

@@ -16,6 +16,8 @@ public class Turno {
 
     private boolean esSobreturno;
 
+    private boolean disponible;
+
     public Turno(){}
 
     public String getId() {
@@ -80,5 +82,13 @@ public class Turno {
 
     public void setEsSobreturno(boolean esSobreturno) {
         this.esSobreturno = esSobreturno;
+    }
+
+    public boolean isDisponible() {
+        return disponible;
+    }
+
+    public void setDisponible(boolean disponible) {
+        this.disponible = disponible;
     }
 }

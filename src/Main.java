@@ -108,7 +108,13 @@ public class Main {
                                 break;
 
                             case 3:
-
+                                for(int i=0; i<clinica.getTurnos().size(); i++){
+                                    if(clinica.getTurnos().get(i).isDisponible()){
+                                        System.out.println( "->" +i + "- ID:" + clinica.getTurnos().get(i).getId() + "    ----------------    " + clinica.getTurnos().get(i).getFechaInicio() + " - " + clinica.getTurnos().get(i).getFechaFin());
+                                    }
+                                }
+                                mostrarMenu(clinica);
+                                break;
                             case 4:
 
                             case 5:
