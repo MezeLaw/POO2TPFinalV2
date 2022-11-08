@@ -1,5 +1,6 @@
 package personas;
 
+import institucion.Especialidad;
 import institucion.Prestacion;
 import institucion.Turno;
 
@@ -7,10 +8,20 @@ import java.util.ArrayList;
 
 public class Doctor extends Persona {
 
-    //En este MVP los doctores no tienen una especialidad definida
+
+    private Especialidad especialidad;
+
     public Doctor() {
+        super(0, null, null);
     }
 
+    public Especialidad getEspecialidad() {
+        return especialidad;
+    }
+
+    public void setEspecialidad(Especialidad especialidad) {
+        this.especialidad = especialidad;
+    }
 
     //TODO definir e implementar funcionalidad
     public void registrarAsistencia(Turno turno) {

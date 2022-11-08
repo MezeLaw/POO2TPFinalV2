@@ -10,7 +10,9 @@ public class Paciente extends Persona{
     private ArrayList<Turno> turnosAsociados;
     private String cobertura;
 
-    public Paciente(){}
+    public Paciente(){
+        super(0, null, null);
+    }
 
     public ArrayList<Turno> getTurnosAsociados() {
         return turnosAsociados;

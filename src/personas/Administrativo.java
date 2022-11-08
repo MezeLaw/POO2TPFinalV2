@@ -7,11 +7,17 @@ import java.util.ArrayList;
 
 public class Administrativo extends Persona{
 
-    private Clinica clinica = Clinica.getInstance();
 
-    public Administrativo(){}
+    public Administrativo(int dni, String nombre, String apellido) {
+        super(dni, nombre, apellido);
+    }
 
-    //TODO definir e implementar funcionalidad
+    public Administrativo(){
+        super(0, null, null);
+    }
+
+
+//TODO definir e implementar funcionalidad
 
     public void agregarPrestacion(){
         //Esto agrega la prestacion creada a la clinica->prestaciones
